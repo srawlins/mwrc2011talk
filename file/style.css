@@ -1,0 +1,50 @@
+.title-slide h1 {
+  font-size: 4.5em;
+}
+
+h2 {
+  font-size: 3.5em;
+}
+
+.left ul {
+  text-align: left;
+}
+
+.left ul li {
+  text-align: left;
+}
+
+code {
+  font-weight: bold;
+}
+
+.smaller.bullets  ul li {
+  padding: 8px 4px;
+}
+
+.biggish {
+  font-size: 1.3em;
+}
+
+.big {
+  font-size: 2em;
+}
+
+.highlight {
+  color: #9999FF;
+}
+
+.littlebigcaps {
+  font-size: 4em;
+  font-variant: small-caps;
+  font-weight: bold;
+}
+
+.ul-inline ul {
+  list-style-type: none;
+  text-align: center;
+}
+
+.ul-inline ul li {
+  display: inline;
+}

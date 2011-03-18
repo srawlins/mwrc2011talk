@@ -1,0 +1,990 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>The State of C Extensions: Alive and Well, Deal with It</title>
+
+  <link rel="stylesheet" href="./css/reset.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/showoff.css" type="text/css"/>
+
+  <script type="text/javascript" src="./js/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="./js/jquery.cycle.all.js"></script>
+	<script type="text/javascript" src="./js/jquery-print.js"></script>
+  <script type="text/javascript" src="./js/jquery.batchImageLoad.js"></script>
+
+  <script type="text/javascript" src="./js/jquery.doubletap-0.1.js"></script>
+
+  <script type="text/javascript" src="./js/fg.menu.js"></script>
+  <script type="text/javascript" src="./js/showoff.js"></script>
+  <script type="text/javascript" src="./js/jTypeWriter.js"> </script>
+  <script type="text/javascript" src="./js/sh_main.min.js"></script>
+  <script type="text/javascript" src="./js/core.js"></script>
+  <script type="text/javascript" src="./js/showoffcore.js"></script>
+
+  <link type="text/css" href="./css/fg.menu.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/theme/ui.all.css" media="screen" rel="stylesheet" />
+  <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
+
+  
+    <link rel="stylesheet" href="file/style.css" type="text/css"/>
+  
+
+  
+    <script type="text/javascript" src="file/jquery.timers.js"></script>
+  
+
+  <script type="text/javascript">
+  $(function(){
+    setupPreso(false, './');
+  });
+  </script>
+</head>
+
+<body>
+
+
+<a tabindex="0" href="#search-engines" class="fg-button fg-button-icon-right ui-widget ui-state-default ui-corner-all" id="navmenu"><span class="ui-icon ui-icon-triangle-1-s"></span>slides</a>
+<div id="navigation" class="hidden"></div>
+
+<div id="help">
+  <table>
+    <tr><td class="key">space, &rarr;</td><td>next slide</td></tr>
+    <tr><td class="key">&larr;</td><td>previous slide</td></tr>
+    <tr><td class="key">d</td><td>debug mode</td></tr>
+    <tr><td class="key">## &lt;ret&gt;</td><td>go to slide #</td></tr>
+    <tr><td class="key">c</td><td>table of contents (vi)</td></tr>
+    <tr><td class="key">f</td><td>toggle footer</td></tr>
+    <tr><td class="key">r</td><td>reload slides</td></tr>
+    <tr><td class="key">z</td><td>toggle help (this)</td></tr>
+  </table>
+</div>
+
+<div id="preso">loading presentation...</div>
+<div id="footer">
+  <span id="slideInfo"></span>
+  <span id="debugInfo"></span>
+</div>
+
+<div id="slides" class="offscreen" style="display:none;">
+<div class="slide" data-transition="none"><div class="content title-slide" ref="intro/intro/1">
+<h1>MountainWest RubyConf 2011</h1>
+
+<h2>The State of C Extensions:</h2>
+
+<h2>Alive and Well, Deal with It</h2></div>
+</div><div class="slide" data-transition="none"><div class="content bullets left small whoami" ref="intro/intro/2">
+
+
+<script>
+$(".whoami").bind("showoff:show", function (event) {
+  limit = 60*27;
+  $('#footer').append('<span id="timer" style="float: right; font-size: 0.6em;"/>');
+  $('#timer').everyTime(1000, function(i) {
+    remaining = limit - i;
+    mins = Math.floor(remaining / 60);
+    secs = remaining % 60;
+    
+    if (secs == 0) {
+      $(this).css({fontWeight: "bold"});
+    } else if (secs == 58) {
+      $(this).css({fontWeight: "normal"});
+    }
+    
+    if (mins == 2) if (secs == 0) {
+      $(this).css({color: "red"})
+    }
+    
+    if (Math.floor(secs/10) == 0) { secs = "0"+secs; }
+    $(this).html(mins + ":" + secs);
+  });
+});
+</script>
+
+
+<h1>Who am I?</h1>
+
+<h2>Sam Rawlins</h2>
+
+<ul>
+<li>Twitter: @srawlins</li>
+<li>Email: sam.rawlins@gmail.com</li>
+<li>Github: LMGTFY github srawlins</li>
+<li>Claims to Fame in the Ruby Community: none really</li>
+<li>Claims to Fame, Otherwise: um... none again</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content bullets incremental left smaller x4499ff" ref="intro/intro/3">
+
+
+<script>
+  $(".x4499ff").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#4499ff", border: "none"});
+    $("body").css({backgroundColor: "#4499ff"});
+    $("#footer").css({backgroundColor: "#55aaff", color: "#555555"});
+  });
+  
+  $(".x4499ff").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "white"});
+    $("body").css({backgroundColor: "white"});
+    $("#footer").css({backgroundColor: "#eeeeee", color: "#000000"});
+  });
+</script>
+
+
+<h1>Quickly, Quickly: What's a "C Extension"?</h1></div>
+</div><div class="slide" data-transition="none"><div class="content small" ref="intro/intro/4">
+<h1>MRI <span style="font-size: 0.5em;">(first implementation of Ruby)</span> is written in C</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content" ref="intro/intro/5">
+<h1>Many lower-level libs</h1>
+
+<h1>are written in C</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left big" ref="intro/intro/6">
+<ul>
+<li>Fixnum</li>
+<li>Bignum</li>
+<li>String</li>
+<li>Hash</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content" ref="intro/intro/7">
+<h1>Fixnum is older than my grandpa.</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets left biggish" ref="intro/intro/8">
+<ul>
+<li>1.9.2 methods like <code>Array#keep_if</code></li>
+<li>1.9.2 methods like <code>Dir.home</code></li>
+<li>1.9.2 class: Fiber</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content" ref="intro/intro/9">
+<h1>Ruby must be able to "talk to" the expansive world of C libraries.</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content" ref="intro/intro/10">
+<h1>Ruby C Extension API</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental favorite_gems" ref="intro/intro/11">
+
+
+<script>
+    // bind to custom event
+    fg_counter = 0;
+    
+
+    
+    jQuery.fn.center = function () {
+      return this.each(function() {
+        var rent = $(this).parents('.slide');
+        var top = (rent.height() - $(this).outerHeight()) / 2;
+        var left = (rent.width() - $(this).outerWidth()) / 2;
+        $(this).css({position:'absolute', margin:0, top: top+'px', left: left+'px'});
+      });
+    }
+
+
+    
+    $(".favorite_gems").bind("showoff:next", function (event) {
+      fg_counter++;
+      var fg_mysql = $(event.target).find("#fg_mysql");
+      var fg_pg = $(event.target).find("#fg_pg");
+      var fg_sqlite3_ruby = $(event.target).find("#fg_sqlite3_ruby");
+      var fg_ruby_oci8 = $(event.target).find("#fg_ruby_oci8");
+      var fg_ibm_db = $(event.target).find("#fg_ibm_db");
+      var fg_dbi = $(event.target).find("#fg_dbi");
+      if (fg_counter == 2) {
+        fg_mysql.fadeTo(300, 1.0).center().animate({left: "+=280", top: "-=65"}, 600);
+        fg_pg.delay(           400).fadeTo(300, 1.0).center().animate({left: "+=180", top: "+=0"}, 600);
+        fg_sqlite3_ruby.delay( 800).fadeTo(300, 1.0).center().animate({left: "-=200", top: "+=0"}, 600);
+        fg_ruby_oci8.delay(   1200).fadeTo(300, 1.0).center().animate({left: "-=300", top: "-=65"}, 600);
+        fg_ibm_db.delay(      1600).fadeTo(300, 1.0).center().animate({left: "-=200", top: "-=130"}, 600);
+        fg_dbi.delay(         2000).fadeTo(300, 1.0).center().animate({left: "+=180", top: "-=130"}, 600);
+      }
+    });
+</script>
+
+
+<h1>Some favorite gems are C extensions</h1>
+
+<ul>
+<li><span style="position: aabsolute;"><code>/.*sql.*/</code></span><span id="fg_mysql" style="opacity: 0.0; position: absolute;">mysql</span><span id="fg_pg" style="opacity: 0.0; position: absolute;">pg</span><span id="fg_sqlite3_ruby" style="opacity: 0.0; position: absolute;">sqlite3-ruby</span><span id="fg_ruby_oci8" style="opacity: 0.0; position: absolute;">ruby-oci8</span><span id="fg_ibm_db" style="opacity: 0.0; position: absolute;">ibm-db</span><span id="fg_dbi" style="opacity: 0.0; position: absolute;">DBI</span></li>
+<li/>
+<li>Nokogiri</li>
+<li>JSON</li>
+<li>FastThread</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left" ref="intro/intro/12">
+<h1>RubyGems.org</h1>
+
+<ul>
+<li>21911 gems | ~415 extensions</li>
+<li>Of top 100 most downloaded, 18 are C extensions</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content left" ref="intro/intro/13">
+<h1>Top 10 Most Downloaded</h1>
+
+<p style="font-size: 2.6em;">
+1. sqlite3-ruby<br/>
+2. nokogiri<br/>
+3. json<br/>
+4. mysql<br/>
+5. fastthread<br/>
+6. eventmachine<br/>
+7. hpricot<br/>
+8. ffi<br/>
+9. gherkin<br/>
+10. mongrel
+</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content biggish x663300" ref="intro/intro/14">
+
+
+<script>
+  $(".x663300").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#663300", border: "none", color: "white"});
+    $("body").css({backgroundColor: "#663300"});
+    $("#footer").css({backgroundColor: "#552200", color: "#996600"});
+  });
+  
+  $(".x663300").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "#4499ff", color: "black"});
+    $("body").css({backgroundColor: "#4499ff"});
+    $("#footer").css({backgroundColor: "#55aaff", color: "#555555"});
+  });
+</script>
+
+
+<h1>Motivations for Writing a C Extension</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content" ref="intro/intro/15">
+<h1>&gt; 95% of C Extensions</h1>
+
+<h1>are motivated by:</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content big" ref="intro/intro/16">
+<h1>1. Speed</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content biggish" ref="intro/intro/17">
+<h1>2. Bridge to an existing C library</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content" ref="intro/intro/18">
+<h1>Many C extensions are a mix of both</h1>
+
+<h1>zlib</h1>
+
+<h1>nokogiri</h1></div>
+</div><div class="slide" data-transition="scrollUp"><div class="content center small x000000" ref="intro/intro/19">
+
+
+<script>
+  $(".x000000").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#000000", border: "none", color: "white"});
+    $("body").css({backgroundColor: "#000000"});
+    $("#footer").css({backgroundColor: "#222222", color: "#999999"});
+  });
+  
+  $(".x000000").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "#663300", color: "white"});
+    $("body").css({backgroundColor: "#663300"});
+    $("#footer").css({backgroundColor: "#552200", color: "#996600"});
+  });
+</script>
+
+
+<h1>I am Not a C Extension Nazi.</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center small" ref="intro/intro/20">
+<h1>I am a Rubyist.</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left" ref="intro/intro/21">
+<h1>Sidenote</h1>
+
+<ul>
+<li>For any anti-monolingual nazis
+<li style="font-size: 0.4em;">(Zed)</li>
+<li style="font-size: 0.4em;">A lot of people, actually</li></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="intro/intro/22">
+<h1>How do I define 'Rubyist'?</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content" ref="intro/intro/23">
+<h1>As a Rubyist,</h1>
+
+<h1>I try program in Ruby</h1>
+
+<h1>&gt; 50% of the time</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center small" ref="intro/intro/24">
+<h1>I am a Rubyist.</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content small this_is_why" ref="intro/intro/25">
+
+
+<script>
+  $(".this_is_why").bind("showoff:show", function (event) {
+    var tiw_if = $(event.target).find("#tiw_if");
+    var tiw_tiw = $(event.target).find("#tiw_tiw");
+    var tiw_isce = $(event.target).find("#tiw_isce");
+    var tiw_tertmce = $(event.target).find("#tiw_tertmce");
+    tiw_if.delay(800).fadeTo('fast', 1.0);
+    tiw_tiw.delay(1400).fadeTo('fast', 1.0);
+    tiw_isce.delay(2000).fadeTo('fast', 1.0);
+    tiw_tertmce.delay(3000).fadeTo(400, 1.0);
+  });
+</script>
+
+
+
+
+<div id="tiw_if" style="opacity: 0.0; font-size: 3.8em; text-align: left;">In fact</div>
+
+
+<div id="tiw_tiw" style="opacity: 0.0; text-align: center; width: 65%;"><span style="border-bottom: solid 4px #FF0000; font-size: 5.0em; font-weight: bold;">this is why</span></div>
+
+
+<div id="tiw_isce" style="opacity: 0.0; font-size: 3.8em; text-align: right;">I support C extensions</div>
+
+
+<br/><br/>
+
+
+
+
+<div id="tiw_tertmce" style="opacity: 0.0;">
+  <h1>They expose Ruby</h1>
+  <h1>to more computing ecosystems.</h1>
+</div>
+</div>
+</div><div class="slide" data-transition="none"><div class="content x33cc66" ref="intro/intro/26">
+
+
+<script>
+  $(".x33cc66").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#33cc66", border: "none", color: "white"});
+    $("body").css({backgroundColor: "#33cc66"});
+    $("#footer").css({backgroundColor: "#22cc55", color: "#009900"});
+  });
+  
+  $(".x33cc66").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "#000000", color: "white"});
+    $("body").css({backgroundColor: "#000000"});
+    $("#footer").css({backgroundColor: "#222222", color: "#999999"});
+  });
+</script>
+
+
+<h1>I try to be pragmatic.</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content" ref="intro/intro/27">
+<h1>Pragmatic C Extensions</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental" ref="intro/intro/28">
+<h1>Chunky PNG</h1>
+
+<ul>
+<li>---&gt;</li>
+<li><span style="font-size: 1.6em;">OilyPNG</span></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content smaller cpvsop" ref="intro/intro/29">
+
+
+<script>
+  cpvsop_counter = 0;
+  $(".cpvsop").bind("showoff:next", function (event) {
+    cpvsop_counter++;
+    var pre = $(event.target).find("pre");
+    var h2 = $(event.target).find("h2");
+    var cpvsop_01 = $(event.target).find("#cpvsop_01");
+    var cpvsop_02 = $(event.target).find("#cpvsop_02");
+    var cpvsop_03 = $(event.target).find("#cpvsop_03");
+    var cpvsop_04 = $(event.target).find("#cpvsop_04");
+    var cpvsop_05 = $(event.target).find("#cpvsop_05");
+    
+    if (cpvsop_counter == 1) {
+      event.preventDefault();
+      cpvsop_01.fadeOut(600);
+      cpvsop_03.delay(400).fadeOut(600);
+      cpvsop_05.delay(800).fadeOut(600);
+    }
+    
+    if (cpvsop_counter == 2) {
+      event.preventDefault();
+      pre.animate({fontSize: "3.6em"}, 800);
+    }
+    
+    if (cpvsop_counter == 3) {
+      event.preventDefault();
+      h2.fadeTo(200, 1.0);
+    }
+  });
+</script>
+
+
+
+
+<h1 style="font-size: 7em;">Chunky PNG vs OilyPNG</h1>
+
+
+
+
+<pre><code><span id="cpvsop_01">---------------------------------------------
+ChunkyPNG (0.10.2) decoding benchmark (n=20)
+---------------------------------------------</span><span id="cpvsop_02">
+                         ChunkyPNG      OilyPNG</span><span id="cpvsop_03">
+PNG - no filtering      ( 1.056832)  ( 0.078345)  (13.6 x)
+PNG - UP filtering      ( 3.327986)  ( 0.078387)  (42.7 x)</span><span id="cpvsop_04">
+PNG - PAETH filtering   ( 7.499367)  ( 0.089143)  (84.3 x)</span><span id="cpvsop_05">
+From RGBA pixelstream   ( 0.032571)  ( 0.035790)  ( 0.92x)
+From RGB pixelstream    ( 0.221163)  ( 0.226358)  ( 0.98x)</span></code></pre>
+
+
+<br/><br/>
+
+
+
+
+<h2 style="font-size: 7em; opacity: 0.0;">More than 80x as fast!</h2>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="intro/intro/30">
+<h1>Pragmatic C Extensions</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental big" ref="intro/intro/31">
+<h1>JSON</h1>
+
+<ul>
+<li>Two variants</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental code big" ref="intro/intro/32">
+<ul>
+<li><p><strong>gem install json</strong></p></li>
+<li><p><strong>gem install json_pure</strong></p></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental code biggish" ref="intro/intro/33">
+<h1><strong>require 'json'</strong></h1></div>
+</div><div class="slide" data-transition="none"><div class="content big x009900" ref="main/main/1">
+
+
+<script>
+  $(".x009900").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#003300", border: "none", color: "#33cc66"});
+    $("body").css({backgroundColor: "#003300"});
+    $("#footer").css({backgroundColor: "#007700", color: "#003300"});
+  });
+  
+  $(".x009900").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "#33cc66", color: "white"});
+    $("body").css({backgroundColor: "#33cc66"});
+    $("#footer").css({backgroundColor: "#22cc55", color: "#009900"});
+  });
+</script>
+
+
+<h1>Where's the love?</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="main/main/2">
+<h1>C extensions have become unpopular in recent years. Why?</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="main/main/3">
+<h1>Ruby code is portable</h1>
+
+<h2>(read: across platforms, and interpreters/VMs)</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left small wheres_the_love_03" ref="main/main/4">
+
+
+<script>
+    // bind to custom event
+    wtl03_counter = 0;
+    $(".wheres_the_love_03").bind("showoff:next", function (event) {
+      wtl03_counter++;
+      var wtl03_einr = $(event.target).find("#wtl03_einr");
+      if (wtl03_counter==3) {
+        event.preventDefault();
+        wtl03_einr.css({display: "inline"});
+      }
+    });
+</script>
+
+
+<ul>
+<li>Patching, monkey-patching, debugging are difficult</li>
+<li>"Self-documenting code"... <span id="wtl03_einr" style="display: none; font-size: 1.1em; font-weight: bold;">except it's not Ruby!</span></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental center small" ref="main/main/5">
+<h1>Common Concerns:<br/>/<span style="opacity: 0.5;">((monkey-)?</span>patch<span style="opacity: 0.5;">|debugg)</span>ing/</h1>
+
+<h2>if C extension, then presumably so for a reason</h2></div>
+</div><div class="slide" data-transition="none"><div class="content bullets incremental center small" ref="main/main/6">
+<h1>Common Concerns:<br/>/<span style="opacity: 0.5;">((</span>monkey-<span style="opacity: 0.2;">)?</span>patch<span style="opacity: 0.5;">|debugg)</span>ing/</h1>
+
+<h2><i>tweaking</i> a method's functionality <i>is</i> difficult <!-- (String#*) --></h2></div>
+</div><div class="slide" data-transition="none"><div class="content bullets incremental center small" ref="main/main/7">
+<h1>Common Concerns:<br/>/<span style="opacity: 0.5;">((monkey-)?patch|</span>debugg<span style="opacity: 0.5;">)</span>ing/</h1>
+
+<h2>A Rubyist now needs to debug C</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left small" ref="main/main/8">
+<h1>Common Concerns: Documentation</h1>
+
+<ul>
+<li>In a C extension, <b>code is not self-documenting</b>.</li>
+<li>Rubyists should not be expected to know C in order to discover what a method does, or how it does what it does. (<code>Range#to_s</code>)</li>
+<li>The common solution is documenting code in methods, and including RDoc-style comments (which YARD now respects) (<code>String#capitalize!</code>)</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small xcccc33" ref="main/main/9">
+
+
+<script>
+  $(".xcccc33").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#cccc33", border: "none", color: "#333333"});
+    $("body").css({backgroundColor: "#cccc33"});
+    $("#footer").css({backgroundColor: "#ffff00", color: "#666666"});
+  });
+  
+  $(".xcccc33").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "#003300", color: "#33cc66"});
+    $("body").css({backgroundColor: "#003300"});
+    $("#footer").css({backgroundColor: "#007700", color: "#003300"});
+  });
+</script>
+
+
+<h1>Literature Example</h1>
+
+<h2>Rubinius</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content small rur" ref="main/main/10">
+
+
+<script>
+    rur_counter = 0;
+    $(".rur").bind("showoff:next", function (event) {
+      rur_counter++;
+      var rur_01 = $(event.target).find("#rur_01");
+      var rur_02 = $(event.target).find("#rur_02");
+      var rur_03 = $(event.target).find("#rur_03");
+      var rur_04 = $(event.target).find("#rur_04");
+      var rur_05 = $(event.target).find("#rur_05");
+      if (rur_counter==1) {
+        event.preventDefault();
+        rur_01.fadeTo( 200, 0.1);
+        rur_02.fadeTo( 400, 0.1);
+        rur_03.fadeTo( 600, 0.1);
+        rur_04.fadeTo( 800, 0.1);
+        rur_05.fadeTo(1000, 0.1);
+      }
+
+      if (rur_counter==2) {
+        event.preventDefault();
+        rur_02.fadeTo(500, 1.0);
+      }
+
+      if (rur_counter==3) {
+        event.preventDefault();
+        rur_03.fadeTo(500, 1.0);
+      }
+
+      if (rur_counter==4) {
+        event.preventDefault();
+        rur_04.fadeTo(500, 1.0);
+      }
+    });
+
+    $(".rur").bind("showoff:prev", function (event) {
+      rur_counter = 0;
+    });
+</script>
+
+
+<h2><span id="rur_01">"A large aspect of popular languages such as C and Java is that the majority of the functionality available to the programmer is written in the language itself. Rubinius has the goal of adding Ruby to that list. Rubyists could more easily</span> <span id="rur_02" style="border-bottom: solid 3px black;">add features to the language,</span> <span id="rur_03" style="border-bottom: solid 3px black;">fix bugs,</span> <span id="rur_04" style="border-bottom: solid 3px black;">and learn how the language works.</span> <span id="rur_05">Wherever possible Rubinius is written in Ruby. Where not possible (yet), it's C++."</span></h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center small" ref="main/main/11">
+<h1>Literature Example</h1>
+
+<h2>10th Ed of Pickaxe</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center small" ref="main/main/12">
+<h2>"... The extension API is less relevant than it was, partly because the extensions you'll need have already been written..."</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/13">
+<h1>Valid Concerns</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/14">
+<h1>Which is why most Ruby code is not written as a C extension, duh.</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/15">
+<h1>However, sometimes the speed or existing-C-code benefits outweigh these concerns.</h1></div>
+</div><div class="slide" data-transition="none"><div class="content center biggish xffffff_2" ref="main/main/16">
+
+
+<script>
+  $(".xffffff_2").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#ffffff", border: "none", color: "#000099"});
+    $("body").css({backgroundColor: "#ffffff"});
+    $("#footer").css({backgroundColor: "#eeeeee", color: "#000066"});
+  });
+  
+  $(".xffffff_2").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "#cccc33", color: "#333333"});
+    $("body").css({backgroundColor: "#cccc33"});
+    $("#footer").css({backgroundColor: "#ffff00", color: "#666666"});
+  });
+</script>
+
+
+<h1>Recent C Extensions</h1>
+
+<h1>Ruby5</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/17">
+
+
+<!-- Oct 19: -->
+
+
+<h1>TinyTDS</h1>
+
+<h2>A modern, simple and fast FreeTDS library for Ruby using DB-Library</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/18">
+
+
+<!-- Dec 10: -->
+
+
+<h1>Summarize</h1>
+
+<h2>C Bindings for Open Text Summarizer</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/19">
+
+
+<!-- Dec 14: -->
+
+
+<h1>RGeo</h1>
+
+<h2>(you know, one of those... geographic libraries)</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/20">
+
+
+<!-- Dec 17: -->
+
+
+<h1><img src="./file/main/../cool.io.png"/></h1>
+
+<h2>Node.Js-style Event-Driven Awesomeness</h2>
+
+<h2>(C bindings for libev)</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/21">
+
+
+<!-- Jan 11: -->
+
+
+<h1>Streamly</h1>
+
+<h2>a streaming REST client for Ruby,<br/>using libcurl</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/22">
+
+
+<!-- Jan 18: -->
+
+
+<h1>io_splice</h1>
+
+<h2>exposes Linux's zero-copy function: splice()</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center small" ref="main/main/23">
+
+
+<!-- Jan 21: -->
+
+
+<h1>HandlerSocket</h1>
+
+<h2>"The NoSQL MySQL"</h2>
+
+<h2>Ruby extensions: <span style="white-space: nowrap;">ruby-handlersocket</span>, handlersocket</h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental center small" ref="main/main/24">
+
+
+<!-- Jan 28: -->
+
+
+<h1><img src="./file/main/../gosu.png"/></h1>
+
+<ul>
+<li>Gaming library</li>
+<li>C++ extension</li>
+<li>Chipmunk physics engine (Ruby bindings)</li>
+<li>ruby-gl (a C extension) to add 3D.</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content center" ref="main/main/25">
+<h1>Mentions in Preston Lee's</h1>
+
+<h2>"Ruby Supercomputing: Using The GPU For Massive Performance Speedup"</h2></div>
+</div><div class="slide" data-transition="none"><div class="content biggish xffffbb" ref="main/main/26">
+
+
+<script>
+  $(".xffffbb").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#ffffbb", border: "none", color: "#663333"});
+    $("body").css({backgroundColor: "#ffffbb"});
+    $("#footer").css({backgroundColor: "#ffff99", color: "#aa7777"});
+    
+    $(event.target).find("#tlc_don01").fadeTo(10, 0.0);
+    $(event.target).find("#tlc_don02").fadeTo(10, 0.0);
+    $(event.target).find("#tlc_don03").fadeTo(10, 0.0);
+
+    var tlc_don01 = $(event.target).find("#tlc_don01");
+    $(event.target).find("#tlc_don01").delay(600).fadeTo(50, 1.0);
+    $(event.target).find("#tlc_don02").delay(900).fadeTo(50, 1.0);
+    $(event.target).find("#tlc_don03").delay(1200).fadeTo(50, 1.0);
+  });
+  
+  $(".xffffbb").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "#ffffff", color: "#000099"});
+    $("body").css({backgroundColor: "#ffffff"});
+    $("#footer").css({backgroundColor: "#eeeeee", color: "#000066"});
+  });
+</script>
+
+
+<h1>The last big concern</h1>
+
+<h2><span id="tlc_don01" style="opacity: 0.0;">Don</span> <span id="tlc_don02" style="opacity: 0.0;">Don</span> <span id="tlc_don03" style="opacity: 0.0;">Don</span></h2></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental ul-inline" ref="main/main/27">
+<h1>Are C extensions portable?</h1>
+
+<ul>
+  <li><span class="littlebigcaps">Yes</span></li>
+  <li><span class="littlebigcaps">*</span></li>
+</ul>
+
+
+<ul>
+<li>(but really, just think of that as a Yes)</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left small" ref="main/main/28">
+<h1>What's the <span style="color: red; font-size: 1.6em;">*</span> all about?</h1>
+
+<ul>
+<li>I'll ask one back: What does "portability" mean?</li>
+<li>1. Portability across "platforms"</li>
+<li>2. Portability across Ruby VMs / interpreters</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left small are_c_exts_portable_across_oss" ref="main/main/29">
+
+
+<script>
+    $(".are_c_exts_portable_across_oss").bind("showoff:show", function (event) {
+      acepao_counter = 0;
+      $(event.target).find("#acepao_wtf01").fadeTo(100, 0.0);
+    });
+    
+    $(".are_c_exts_portable_across_oss").bind("showoff:next", function (event) {
+      acepao_counter++;
+      var acepao_wtf01 = $(event.target).find("#acepao_wtf01");
+      if (acepao_counter==3) {
+        event.preventDefault();
+        acepao_wtf01.fadeTo(100, 1.0);
+      }
+    });
+</script>
+
+
+
+
+<h1 style="font-size: 4em;">Are C extensions portable <i>across OS's</i>?</h1>
+
+
+
+
+<h2 style="text-decoration: underline;">Where is Ruby code portable?</h2>
+
+
+<ul>
+<li>Ruby 1.9.2's NEWS file:</li>
+<li><strong>Supported:</strong> Debian GNU/Linux <span style="font-size: 0.7em; font-weight: bold;">H</span>a IA32 <span id="acepao_wtf01" style="color: red; opacity: 0.0;">WTF?</span>
+<li><strong>Efforts made for:</strong> <code>/(x64-)mswin(32|64)|mingw32/</code>; Mac OS X 10.5 (Intel), 10.6; FreeBSD 6+ (amd64, IA32); Solaris 10; Symbian OS.</li>
+<li><strong>Efforts made for:</strong> Other Linux; Other OS X; cygwin; AIX 5; Other POSIX-compatible; BeOS (Haiku).</li>
+</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="main/main/30">
+<h1>Are C extensions portable <i>across OS's</i>?</h1></div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left small wiietcce" ref="main/main/31">
+
+
+<script>
+  wiietcce_counter = 0;
+
+  $(".wiietcce").bind("showoff:show", function (event) {
+    wiietcce_01 = $(event.target).find("#wiietcce_01");
+    wiietcce_02 = $(event.target).find("#wiietcce_02");
+    wiietcce_03 = $(event.target).find("#wiietcce_03");
+    wiietcce_04 = $(event.target).find("#wiietcce_04");
+    wiietcce_05 = $(event.target).find("#wiietcce_05");
+    wiietcce_06 = $(event.target).find("#wiietcce_06");
+    wiietcce_07 = $(event.target).find("#wiietcce_07");
+    wiietcce_08 = $(event.target).find("#wiietcce_08");
+
+    if (wiietcce_counter != 0) {
+      wiietcce_counter = 0;
+      wiietcce_02.css({top: wiietcce_02.offset().top-40}).fadeTo( 10, 0.0);
+      wiietcce_04.fadeTo( 10, 0.0);
+      wiietcce_05.css({top: wiietcce_05.offset().top-40}).fadeTo( 10, 0.0);
+      wiietcce_06.css({top: wiietcce_06.offset().top-40, left: wiietcce_06.offset().left-135}).fadeTo( 10, 0.0);
+      wiietcce_08.css({top: wiietcce_08.offset().top-40}).fadeTo( 10, 0.0);
+    }
+  });
+  
+  $(".wiietcce").bind("showoff:next", function (event) {
+    wiietcce_counter++;
+    if (wiietcce_counter == 2) {
+      event.preventDefault();
+      wiietcce_02.css({top: wiietcce_02.offset().top+40}).fadeTo(100, 1.0);
+    }
+    if (wiietcce_counter == 5) {
+      event.preventDefault();
+      wiietcce_04.fadeTo(100, 1.0);
+    }
+    if (wiietcce_counter == 6) {
+      event.preventDefault();
+      wiietcce_05.css({top: wiietcce_05.offset().top+40}).fadeTo(100, 1.0);
+    }
+    if (wiietcce_counter == 7) {
+      event.preventDefault();
+      wiietcce_06.css({top: wiietcce_06.offset().top+40, left: wiietcce_06.offset().left+135}).fadeTo(100, 1.0);
+    }
+    if (wiietcce_counter == 10) {
+      event.preventDefault();
+      wiietcce_08.css({top: wiietcce_08.offset().top+40}).fadeTo(400, 0.7);
+    }
+  });
+</script>
+
+
+<h1>Where is it easy<br/>to compile C extensions?</h1>
+
+<ul>
+<li><strong>Dead-fracking-simple:</strong> <span id="wiietcce_01" style="position: absolute;">Linux (um, <em>any</em>, duh);</span> <span id="wiietcce_02" style="opacity: 0.0; position: absolute;">OS X (Xcode)</span></li>
+<li/>
+<li><strong>Um... I imagine dead-simple?</strong> <span id="wiietcce_03" style="position: absolute;">FreeBSD; <span id="wiietcce_04" style="opacity: 0.0;">Solaris 10;</span></span> <span id="wiietcce_05" style="opacity: 0.0; position: absolute;">Symbian OS;</span> <span id="wiietcce_06" style="opacity: 0.0; position: absolute;">AIX 5+</span></li>
+<li/>
+<li><strong>Actually... also pretty simple:</strong> <span id="wiietcce_07" style="position: absolute;">Windows*</span> <span id="wiietcce_08" style="font-size: 0.6em; opacity: 0.0; position: absolute;">(we'll get to that asterisk...)</span></li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content acepao02" ref="main/main/32">
+
+
+<script>
+  $(".acepao02").bind("showoff:show", function (event) {
+    $(event.target).find("#acepao02_01").css({opacity: 0.0});
+    $(event.target).find("#acepao02_01").delay(800).fadeTo(500, 1.0);
+  });
+</script>
+
+
+<h1>Are C extensions portable <i>across OS's</i>?</h1>
+
+<h2 id="acepao02_01" style="opacity: 0.0;">Answer: Anywhere Ruby + a decent C compiler can be found</h2>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left small" ref="main/main/33">
+<h1>Ok, now what is <em>that</em> * for???</h1>
+
+<ul>
+<li>Windows requires a few more steps (but is easier than using Xcode the first time, IMHO).</li>
+<li>1. Install Ruby via the RubyInstaller, or pik (think: RVM for Windows).</li>
+<li>2. Install DevKit, a "sane" enviroment for building C extensions (based on MinGW and MSYS).</li>
+<li>3. Install rake-compiler.</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left" ref="main/main/34">
+
+
+<h1 style="font-size: 4em;">Are C extensions portable <i>across interpreters/VMs</i>?</h1>
+
+
+<ul>
+<li>Rubinius</li>
+<li>JRuby</li>
+<li>MacRuby</li>
+<li><span style="opacity: 0.5;">IronRuby</span></li>
+<li>MagLev</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left" ref="main/main/35">
+<h1>Rubinius</h1>
+
+<ul>
+<li>Requirements: gcc, g++ 4.x, bison, mri 1.8.7+, rubygems, git, ZLib, pthread, gmake, rake</li>
+<li>1.0: Supports ... popular C extensions: ... sqlite3, mysql, nokogiri, yajl-ruby"</li>
+<li>1.0.1: "The C-API support is extended to [support] gherkin, curb, rjb/buildr..."</li>
+<li>1.2.0: 5 big bug fixes to C-API</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left" ref="main/main/36">
+<h1>JRuby</h1>
+
+<ul>
+<li>binaries for: OS X, Linux, BSD, Solaris, other UNIX, Windows(, maybe HP-UX)</li>
+<li>1.6.0 RC1: "ships C extension support prebuilt for OS X"</li>
+<li>1.6.0 RC2: "C extension support prebuilt for OS X, Linux (32/64), Windows (32)"</li>
+<li>1.6.0 RC3: "More platforms with pre-built C extension support" (OpenBSD amd64?)</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left" ref="main/main/37">
+<h1>MacRuby</h1>
+
+<ul>
+<li>(Apr 30, '10) 0.6 release: "MacRuby 0.6 provides support for C extensions written for the original implementation of ruby. We were able to successfully use the Nokogiri, SQLite3 and PostgreSQL extensions from MacRuby."</li>
+<li>(Oct 1, '10) 0.7 release: "Better C extensions support."</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="scrollLeft"><div class="content bullets incremental left smaller" ref="main/main/38">
+<h1>MagLev</h1>
+
+<ul>
+<li>@maglev (Mar 4, '11): "MagLev is still alpha. It will become beta after we finish C extensions. Beta target is end of March."</li>
+<li>@pbmclain (Mar 4, '11): "MagLev Nokogiri test results: 1040 tests, 2177 assertions, 4 failures, 4 errors, 1 skips"</li>
+<li>@maglev (Mar 4, '11): "MagLev-25375 released. Improvements in C-extensions"</li>
+<li>@jc00ke (Mar 5, '11): "C-ext support in @maglev! Hell yeah!!!"</li>
+<li>@maglev (Mar 13, '11): "MagLev 25439 is out... Improves C-Extension support."</li>
+</ul>
+</div>
+</div><div class="slide" data-transition="none"><div class="content biggish x000000_02" ref="main/main/39">
+
+
+<script>
+  $(".x000000_02").bind("showoff:show", function (event) {
+    $(".slide").css({backgroundColor: "#000000", border: "none", color: "white"});
+    $("body").css({backgroundColor: "#000000"});
+    $("#footer").css({backgroundColor: "#222222", color: "#999999"});
+  });
+  
+  $(".x000000_02").bind("showoff:prev", function (event) {
+    $(".slide").css({backgroundColor: "#ffffbb", color: "#663333"});
+    $("body").css({backgroundColor: "#ffffbb"});
+    $("#footer").css({backgroundColor: "#ffff99", color: "#aa7777"});
+  });
+</script>
+
+
+<h1>WTF does all of that<br/>amount to?</h1></div>
+</div><div class="slide" data-transition="none"><div class="content big" ref="main/main/40">
+<h1>The Punchline</h1></div>
+</div><div class="slide" data-transition="none"><div class="content biggish" ref="main/main/41">
+<h1>C-extension-portable</h1>
+
+<h1>=</h1>
+
+<h1>Ruby-portable</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="main/main/42">
+<h1>The State of C Extensions:</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="main/main/43">
+<h1>Not a dying breed among Ruby libraries</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="main/main/44">
+<h1>Highly portable</h1></div>
+</div><div class="slide" data-transition="none"><div class="content" ref="main/main/45">
+<h1>When used pragmatically,</h1>
+
+<h1>Incredibly useful!</h1></div>
+</div><div class="slide" data-transition="none"><div class="content bullets left" ref="main/main/46">
+<h2>Sam Rawlins</h2>
+
+<ul>
+<li>Twitter: @srawlins</li>
+<li>Email: sam.rawlins@gmail.com</li>
+<li>Github: LMGTFY github srawlins</li>
+<li>No C extensions were used to make this presentation</li>
+</ul>
+</div>
+</div>
+</div>
+
+</body>
+</html>
